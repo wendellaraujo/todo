@@ -1,0 +1,102 @@
+<!doctype html>
+<html ng-app="todo">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">┘
+  <meta name="csrf-token" content="{{ csrf_token() }}">
+  <!--<link href="css/app.css" rel="stylesheet">-->
+  <link href="bower_components/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+  <link href="bower_components/bootstrap/dist/js/bootstrap.js" rel="stylesheet">
+  <link rel="stylesheet" href="bower_components/bootstrap-notify/css/bootstrap-notify.css">
+  <link rel="stylesheet" href="css/admin.css">
+  <title> To-Do </title>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+          aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        <a class="navbar-brand" href="#">To-Do</a>
+      </div>
+      <div id="navbar" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-right" ng-show="!$root.authuser">
+          <li><a href="#!/login">Entrar</a></li>
+          <li><a href="#!/cadastrar">Cadastrar</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right" ng-show="$root.authuser">
+          <li><a href="#!/logout">Sair</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-3 col-md-2 sidebar" ng-show="$root.authuser">
+        <div>
+          <ul class="nav nav-sidebar">
+            <li ng-repeat="lst in $root.list"><a href="#!/tarefas/{{lst.id}}">{{lst.nomelista}}</a></li>
+          </ul>
+          <button type="button" class="btn btn-primary btn-xs btn-block" data-toggle="modal" data-target="#myModal">
+  Adicionar Lista
+</button>
+        </div>
+
+      </div>
+      <div class="col-sm-9 col-sm-offset-2 main" ng-view>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" ng-controller="mainCtrl">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">Adicionar Lista</h4>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <form class="">
+              <label for="nome">Nome</label>
+              <input type="text" name="nome" value="" class="form-control" ng-model="lst.nome">
+            </form>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" ng-click="addlista(lst)">Adicionar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class='notifications bottom-right'></div>
+
+  <script src="bower_components/jquery/dist/jquery.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="bower_components/bootstrap-notify/js/bootstrap-notify.js"></script>
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular/angular-route.js"></script>
+  <script src="bower_components/angular/angular-messages.js"></script>
+  <script src="bower_components/angular/angular-locale_pt-br.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/config/routeConfig.js"></script>
+  <script src="js/controller/mainCtrl.js"></script>
+  <script src="js/controller/taskCtrl.js"></script>
+  <script src="js/service/mainAPIservice.js"></script>
+  <script src="js/service/taskAPIservice.js"></script>
+  <script src="js/value/configValue.js"></script>
+</body>
+
+</html>
